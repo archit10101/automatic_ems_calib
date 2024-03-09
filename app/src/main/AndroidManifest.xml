@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature android:name="android.hardware.type.watch" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -16,14 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DynamicColors.Dark">
         <activity
+            android:name=".WhichActivity"
+            android:exported="false" />
+        <activity
+            android:name=".doneActivity"
+            android:exported="false" />
+        <activity
             android:name=".startCalibActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.DynamicColors.Dark" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.Material3.DynamicColors.Dark"
-            android:exported="true">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.DynamicColors.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

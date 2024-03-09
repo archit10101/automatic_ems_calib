@@ -65,9 +65,12 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (bluetoothEMS.isConnected()){
+
                     Intent intent = new Intent(MainActivity.this, startCalibActivity.class);
                     startActivity(intent);
+
                 }else{
                     Toast.makeText(getApplicationContext(), "Not connected. Try reconnecting.", Toast.LENGTH_SHORT).show();
                     if (!bluetoothEMS.isConnected()){
@@ -124,4 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
