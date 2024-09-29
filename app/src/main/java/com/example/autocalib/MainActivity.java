@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     TextView connectedText;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,31 +33,16 @@ public class MainActivity extends AppCompatActivity {
         Singleton mySingleton = Singleton.getInstance(this);
         bluetoothEMS = mySingleton.getMyObject();
 
-        connectedText = findViewById(R.id.connectText);
-        connectedText.setText("Not Connected");
         Button rescanEMS = findViewById(R.id.connect);
+        rescanEMS.setText("Connect");
         rescanEMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!bluetoothEMS.isConnected()){
-                    bluetoothEMS.setmBluetoothAdapter();
-                    connectedText.setText("Not Connected");
-
-                }else{
-                    bluetoothEMS.startAdd("connected with beacon");
-                    connectedText.setText("Connected");
-                }
+                Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
+                startActivity(intent);
             }
         });
 
-        bluetoothEMS.setBluetoothGattCallback(
-                "19b10000-e9f3-537e-4f6c-d104768a1214",
-                "19b10004-e9f3-537e-4f6c-d104768a1214"
-        );
-
-        IntentFilter filterEMS = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(bluetoothEMS.createReciever("E7:96:1E:84:FD:75"), filterEMS);
-        bluetoothEMS.runnableFunc();
 
         startButton = findViewById(R.id.start);
 
@@ -66,22 +50,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (bluetoothEMS.isConnected()){
+                if (bluetoothEMS.isConnected()) {
 
-                    Intent intent = new Intent(MainActivity.this, startCalibActivity.class);
-                    startActivity(intent);
 
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Not connected. Try reconnecting.", Toast.LENGTH_SHORT).show();
-                    if (!bluetoothEMS.isConnected()){
-                        bluetoothEMS.setmBluetoothAdapter();
-                        connectedText.setText("Not Connected");
 
-                    }else{
-                        bluetoothEMS.startAdd("connected with beacon");
-                        connectedText.setText("Connected");
-                    }
                 }
+                Intent intent = new Intent(MainActivity.this, WhatForActivity.class);
+                startActivity(intent);
+
             }
         });
 
@@ -115,19 +93,17 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
-        if (!bluetoothEMS.isConnected()){
-            bluetoothEMS.setmBluetoothAdapter();
-            connectedText.setText("Not Connected");
-
-        }else{
-            bluetoothEMS.startAdd("connected with beacon");
-            connectedText.setText("Connected");
-        }
-
-
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (bluetoothEMS.mReceiver != null) {
+            bluetoothEMS.disconnect();
+            unregisterReceiver(bluetoothEMS.mReceiver);
+        }
+    }
 
 
 }

@@ -4,6 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WhatForActivity">
+    tools:context=".WhichActivity">
 
+
+    <Button
+        android:id="@+id/t1Butt"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="2dp"
+        android:text="Thumb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t4Butt" />
+
+    <Button
+        android:id="@+id/t4Butt"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="2dp"
+        android:text="Wrist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/t2Butt"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="2dp"
+        android:text="Index"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t1Butt" />
+
+    <Button
+        android:id="@+id/t3Butt"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="2dp"
+        android:text="Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t2Butt" />
+
+    <Button
+        android:id="@+id/doneButt"
+        android:layout_width="88dp"
+        android:layout_height="41dp"
+        android:text="Done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/t3Butt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.phonesocketconnection;
+package com.example.autocalib;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
@@ -18,6 +18,9 @@ public class ConnectActivity extends AppCompatActivity {
     Bluetooth bluetoothEMS;
 
     TextView connectedText;
+    Button disconnectEMS;
+    Button refresh;
+    LinearLayout buttonContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,47 +28,62 @@ public class ConnectActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
-
-
-
         setContentView(R.layout.activity_connect);
 
-        Singleton mySingleton = Singleton.getInstance(this);
-        bluetoothEMS = mySingleton.getMyObject();
 
-        LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
+        disconnectEMS = findViewById(R.id.disconnectButton);
+        refresh = findViewById(R.id.refreshButton);
 
-
-
-        connectedText = findViewById(R.id.connectedTo);
-        connectedText.setText("Not Connected");
-        Button disconnectEMS = findViewById(R.id.disconnectButton);
         disconnectEMS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bluetoothEMS.disconnect();
                 disconnectEMS.setVisibility(View.GONE);
+                bluetoothEMS.removeViewsbuttons();
                 connectedText.setVisibility(View.GONE);
-                buttonContainer.setVisibility(View.VISIBLE);
                 buttonContainer.removeAllViews();
-
-                IntentFilter filterEMS = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                registerReceiver(bluetoothEMS.createReciever(ConnectActivity.this, buttonContainer, disconnectEMS, connectedText), filterEMS);
-                bluetoothEMS.runnableFunc();
-
+                unregisterReceiver(bluetoothEMS.mReceiver);
+                refresh.setVisibility(View.VISIBLE);
             }
         });
+
+        Singleton mySingleton = Singleton.getInstance(this);
+        bluetoothEMS = mySingleton.getMyObject();
+
+        buttonContainer = findViewById(R.id.buttonContainer);
+
+        Log.d("123",""+buttonContainer.getChildCount());
+
+        refresh.setOnClickListener(view -> {
+            Log.d("123",""+buttonContainer.getChildCount());
+
+            bluetoothEMS.setmBluetoothAdapter();
+
+//            if (bluetoothEMS.mReceiver != null) {
+//                unregisterReceiver(bluetoothEMS.mReceiver);
+//            }
+//            bluetoothEMS.setBluetoothGattCallback(
+//                    "19b10000-e9f3-537e-4f6c-d104768a1214",
+//                    "19b10005-e9f3-537e-4f6c-d104768a1214"
+//            );
+
+//            buttonContainer.removeAllViews();
+//            IntentFilter filtersEMS = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+//            registerReceiver(bluetoothEMS.createReciever(this, buttonContainer, disconnectEMS, refresh, connectedText), filtersEMS);
+        });
+
+        connectedText = findViewById(R.id.connectedTo);
+        connectedText.setText("Not Connected");
+
 
 
         bluetoothEMS.setBluetoothGattCallback(
                 "19b10000-e9f3-537e-4f6c-d104768a1214",
-                "19b10004-e9f3-537e-4f6c-d104768a1214"
+                "19b10005-e9f3-537e-4f6c-d104768a1214"
         );
 
-        buttonContainer.removeAllViews();
         IntentFilter filterEMS = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(bluetoothEMS.createReciever(this, buttonContainer, disconnectEMS, connectedText), filterEMS);
+        registerReceiver(bluetoothEMS.createReciever(this, buttonContainer, disconnectEMS, refresh,connectedText), filterEMS);
         bluetoothEMS.runnableFunc();
 
 
@@ -99,38 +117,20 @@ public class ConnectActivity extends AppCompatActivity {
             );
         }
 
-        if (!bluetoothEMS.isConnected()){
+        if (!bluetoothEMS.isConnected()) {
             bluetoothEMS.setmBluetoothAdapter();
             connectedText.setText("Not Connected");
 
-        }else{
+        } else {
             bluetoothEMS.startAdd("stim1000");
             connectedText.setText("Connected");
+
+            buttonContainer.setVisibility(View.GONE);
+            disconnectEMS.setVisibility(View.VISIBLE);
+            refresh.setVisibility(View.GONE);
+            connectedText.setVisibility(View.VISIBLE);
+
         }
-
-        Button refresh = findViewById(R.id.refreshButton);
-
-        Log.d("here", Boolean.toString(refresh == null));
-        refresh.setOnClickListener(view -> {
-            bluetoothEMS.setBluetoothGattCallback(
-                    "19b10000-e9f3-537e-4f6c-d104768a1214",
-                    "19b10004-e9f3-537e-4f6c-d104768a1214"
-            );
-
-            buttonContainer.removeAllViews();
-            IntentFilter filtersEMS = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-            registerReceiver(bluetoothEMS.createReciever(this, buttonContainer, disconnectEMS, connectedText), filtersEMS);
-            bluetoothEMS.runnableFunc();
-            if (!bluetoothEMS.isConnected()){
-                bluetoothEMS.setmBluetoothAdapter();
-                connectedText.setText("Not Connected");
-
-            }else{
-                bluetoothEMS.startAdd("stim1000");
-                connectedText.setText("Connected");
-            }
-
-
-        });
     }
+
 }
