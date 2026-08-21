@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Other theme attributes -->
+    </style>
+
+
+    <style name="MapboxCustomManeuverTurnIconStyle" parent="MapboxStyleTurnIconManeuver">
+        <item name="maneuverTurnIconColor">#FFEB3B</item>
+        <item name="maneuverTurnIconShadowColor">#7A6E03</item>
+    </style>
+
+
+    <style name="MapboxCustomManeuverStyle" parent="MapboxStyleManeuverView">
+        <item name="maneuverViewBackgroundColor">#058A0A</item>
+        <item name="subManeuverViewBackgroundColor">#046808</item>
+        <item name="upcomingManeuverViewBackgroundColor">#046808</item>
+        <item name="maneuverViewIconStyle">@style/MapboxCustomManeuverTurnIconStyle</item>
+        <item name="laneGuidanceManeuverIconStyle">@style/MapboxCustomManeuverTurnIconStyle</item>
+    </style>
+
+    <style name="ManeuverTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#FFC107</item>
+        <item name="android:textSize">1sp</item> <!-- Example text size, adjust as needed -->
+
+    </style>
+</resources>
